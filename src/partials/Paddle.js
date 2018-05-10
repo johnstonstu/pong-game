@@ -8,32 +8,32 @@ export default class Paddle {
     this.x = x;
     this.y = y;
     this.fill = fill;
-    this.speed = 10;
+    this.speed = 16;
     this.score = 0;
 
+    //paddle movement key listner
     document.addEventListener("keydown", event => {
       switch (event.key) {
         case up:
-          console.log("up");
           this.up();
           break;
         case down:
-          console.log("down");
           this.down();
           break;
       }
     });
   } // end constructor
 
+  //paddle movement
   up() {
-    this.y -= this.speed;
+    this.y = Math.max(0, this.y - this.speed);
   }
   down() {
-    this.y += this.speed;
+    this.y = Math.min(this.boardHeight - this.height, this.y + this.speed);
   }
 
   render(svg) {
-    //paddle
+    //paddle svg
     let rect = document.createElementNS(SVG_NS, "rect");
     rect.setAttributeNS(null, "fill", this.fill);
     rect.setAttributeNS(null, "width", this.width);
