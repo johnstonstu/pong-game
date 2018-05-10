@@ -1,4 +1,4 @@
-import { SVG_NS } from "../settings";
+import { SVG_NS, KEYS } from "../settings";
 import Board from "./Board";
 import Paddle from "./Paddle";
 
@@ -9,21 +9,32 @@ export default class Game {
     this.height = height;
     this.gameElement = document.getElementById(this.element);
     this.board = new Board(this.width, this.height);
-    this.leftPaddle = new Paddle(
+    this.paddleWidth = this.width / 64;
+    this.paddleHeight = this.height / 4.73;
+    this.boardGap = 10;
+
+    //initate player 1 paddle
+    this.player1 = new Paddle(
       this.height,
-      this.width / 64,
-      this.height / 4.73,
-      10,
-      100,
-      "red"
+      this.paddleWidth,
+      this.paddleHeight,
+      this.boardGap,
+      (this.height - this.paddleHeight) / 2,
+      "red",
+      KEYS.a,
+      KEYS.z
     );
-    this.rightPaddle = new Paddle(
+
+    //initate player 2 paddle
+    this.player2 = new Paddle(
       this.height,
-      this.width / 64,
-      this.height / 4.73,
-      495,
-      100,
-      "blue"
+      this.paddleWidth,
+      this.paddleHeight,
+      this.width - this.paddleWidth - this.boardGap,
+      (this.height - this.paddleHeight) / 2,
+      "blue",
+      KEYS.up,
+      KEYS.down
     );
   }
 
@@ -41,7 +52,7 @@ export default class Game {
     this.board.render(svg);
 
     //render paddles
-    this.leftPaddle.render(svg);
-    this.rightPaddle.render(svg);
+    this.player1.render(svg);
+    this.player2.render(svg);
   }
 }

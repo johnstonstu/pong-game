@@ -32,6 +32,7 @@ export default class Board {
     circle.setAttributeNS(null, "stroke-dasharray", "15, 10");
     circle.setAttributeNS(null, "stroke-width", "3");
 
+    // adds items to html
     svg.appendChild(rect);
     svg.appendChild(line);
     svg.appendChild(circle);
