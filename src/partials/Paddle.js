@@ -33,7 +33,7 @@ export default class Paddle {
   }
 
   render(svg) {
-    //paddle svg
+    //draw paddle svg
     let rect = document.createElementNS(SVG_NS, "rect");
     rect.setAttributeNS(null, "fill", this.fill);
     rect.setAttributeNS(null, "width", this.width);
