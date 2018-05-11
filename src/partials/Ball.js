@@ -1,4 +1,5 @@
 import { SVG_NS } from "../settings";
+import Paddle from "./Paddle";
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
@@ -31,11 +32,12 @@ export default class Ball {
     const hitRight = this.x + this.radius >= this.boardWidth;
     const hitTop = this.y - this.radius <= 0;
     const hitBottom = this.y + this.radius >= this.boardHeight;
+    let scoreLeft = 0;
+    let scoreRight = 0;
 
-    //sets wall collision events
+    // sets wall collision events
     if (hitLeft || hitRight) {
       this.vx *= -1;
-      this.reset();
     }
     if (hitTop || hitBottom) {
       this.vy *= -1;
@@ -61,6 +63,7 @@ export default class Ball {
         this.vx = -this.vx;
       }
     } else {
+      //player 1 ball collision
       let paddle1 = player1.coordinates(
         player1.x,
         player1.y,
@@ -79,6 +82,12 @@ export default class Ball {
     }
   }
 
+  //sets player score if theres a goal
+  goal(player) {
+    player.score++;
+    this.reset();
+  }
+
   render(svg, player1, player2) {
     //ball movement
     this.x += this.vx;
@@ -94,5 +103,16 @@ export default class Ball {
 
     this.wallCollision();
     this.paddleCollision(player1, player2);
+
+    //sets boundries for goals
+    const rightGoal = this.x + this.radius >= this.boardWidth;
+    const leftGoal = this.x - this.radius <= 0;
+
+    if (rightGoal) {
+      this.goal(player1);
+      this.direction = -1;
+    } else if (leftGoal) {
+      this.goal(player2);
+    }
   }
 }
