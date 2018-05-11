@@ -16,8 +16,27 @@ export default class Ball {
     this.y = this.boardHeight / 2;
 
     //sets inital random vector for ball
-    this.vy = Math.floor(Math.random() * 10 - 5);
+    this.vy = 0;
+
+    //fixes 0 vy bug
+    while (this.vy === 0) {
+      this.vy = Math.floor(Math.random() * 10 - 5);
+    }
     this.vx = this.direction * (6 - Math.abs(this.vy));
+  } //end reset
+
+  wallCollision() {
+    const hitLeft = this.x - this.radius <= 0;
+    const hitRight = this.x + this.radius >= this.boardWidth;
+    const hitTop = this.y - this.radius <= 0;
+    const hitBottom = this.y + this.radius >= this.boardHeight;
+
+    if (hitLeft || hitRight) {
+      this.vx *= -1;
+    }
+    if (hitTop || hitBottom) {
+      this.vy *= -1;
+    }
   }
 
   render(svg, player1, player2) {
@@ -32,5 +51,7 @@ export default class Ball {
     circle.setAttributeNS(null, "cx", this.x);
     circle.setAttributeNS(null, "cy", this.y);
     svg.appendChild(circle);
+
+    this.wallCollision();
   }
 }
