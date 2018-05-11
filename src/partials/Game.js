@@ -13,6 +13,14 @@ export default class Game {
     this.paddleHeight = this.height / 4.73;
     this.boardGap = 10;
     this.radius = 8;
+    this.pause = false;
+
+    //pause
+    document.addEventListener("keydown", event => {
+      if (event.key == KEYS.spaceBar) {
+        this.pause = !this.pause;
+      }
+    });
 
     //initate board
     this.board = new Board(this.width, this.height);
@@ -46,6 +54,11 @@ export default class Game {
   }
 
   render() {
+    // pauses render method on return
+    if (this.pause) {
+      return;
+    }
+
     //bigfix to clear html
     this.gameElement.innerHTML = "";
     //renders basic svg view
