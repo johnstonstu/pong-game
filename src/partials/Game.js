@@ -3,6 +3,7 @@ import Board from "./Board";
 import Paddle from "./Paddle";
 import Ball from "./Ball";
 import Score from "./Score";
+import PaddleEffect from "./Effects";
 
 export default class Game {
   constructor(element, width, height) {
@@ -35,7 +36,8 @@ export default class Game {
       (this.height - this.paddleHeight) / 2,
       "red",
       KEYS.a,
-      KEYS.z
+      KEYS.z,
+      "player1"
     );
 
     //initate player 2 paddle
@@ -47,15 +49,24 @@ export default class Game {
       (this.height - this.paddleHeight) / 2,
       "blue",
       KEYS.up,
-      KEYS.down
+      KEYS.down,
+      "player2"
     );
 
     // initate score
-    this.score1 = new Score(this.width / 2 - 50, 30, 30);
-    this.score2 = new Score(this.width / 2 + 25, 30, 30);
+    this.score1 = new Score(this.width / 2 - 50, 30, 30, "red");
+    this.score2 = new Score(this.width / 2 + 25, 30, 30, "blue");
 
     // initate ball
     this.ball = new Ball(this.radius, this.width, this.height);
+
+    //paddle effect
+    this.effectleft = new PaddleEffect(20, this.height / 2, "black");
+    this.effectright = new PaddleEffect(
+      this.width - 20,
+      this.height / 2,
+      "black"
+    );
   }
 
   render() {
@@ -86,5 +97,17 @@ export default class Game {
     //display score on screen
     this.score1.render(svg, this.player1.score);
     this.score2.render(svg, this.player2.score);
+
+    //sets bg color
+    if (this.player1.score >= 10) {
+      document.body.style.backgroundColor = "red";
+    }
+    if (this.player2.score >= 10) {
+      document.body.style.backgroundColor = "blue";
+    }
+
+    //render paddle effect
+    this.effectleft.render(svg);
+    this.effectright.render(svg);
   }
 }
