@@ -24,6 +24,17 @@ export default class Game {
       }
     });
 
+    //reset
+    document.addEventListener("keydown", event => {
+      if (event.key == KEYS.r) {
+        this.pause = false;
+        this.ball.reset();
+        this.player1.score = 0;
+        this.player2.score = 0;
+        document.body.style.backgroundColor = "white";
+      }
+    });
+
     //initate board
     this.board = new Board(this.width, this.height);
 
@@ -99,11 +110,14 @@ export default class Game {
     this.score2.render(svg, this.player2.score);
 
     //sets bg color
-    if (this.player1.score >= 10) {
+    if (this.player1.score >= 2) {
       document.body.style.backgroundColor = "red";
+
+      this.pause = true;
     }
-    if (this.player2.score >= 10) {
+    if (this.player2.score >= 2) {
       document.body.style.backgroundColor = "blue";
+      this.pause = true;
     }
 
     //render paddle effect
