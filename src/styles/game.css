@@ -162,7 +162,20 @@ body {
 }
 
 h1 {
+  /* display: block; */
   font-size: 2.5rem;
   margin-bottom: 1rem;
   text-align: center;
+}
+
+.keymap {
+  text-align: center;
+  border-style: solid;
+  border-width: 10px;
+  background-color: white;
+}
+.keybox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

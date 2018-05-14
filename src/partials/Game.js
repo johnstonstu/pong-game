@@ -34,7 +34,6 @@ export default class Game {
         document.body.style.backgroundColor = "white";
       }
     });
-
     //initate board
     this.board = new Board(this.width, this.height);
 
@@ -109,13 +108,12 @@ export default class Game {
     this.score1.render(svg, this.player1.score);
     this.score2.render(svg, this.player2.score);
 
-    //sets bg color
-    if (this.player1.score >= 2) {
+    //sets bg color for winner
+    if (this.player1.score >= maxScore.value) {
       document.body.style.backgroundColor = "red";
-
       this.pause = true;
     }
-    if (this.player2.score >= 2) {
+    if (this.player2.score >= maxScore.value) {
       document.body.style.backgroundColor = "blue";
       this.pause = true;
     }
@@ -125,3 +123,11 @@ export default class Game {
     this.effectright.render(svg);
   }
 }
+
+//set max score
+var maxScore = document.getElementById("maxScore");
+var form = document.getElementById("myForm");
+
+form.addEventListener("submit", function(evt) {
+  evt.preventDefault();
+});
